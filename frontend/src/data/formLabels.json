@@ -1,0 +1,12 @@
+{
+  "labelsMemo": [
+    "Unit Kerja",
+    "Sasaran Unit Kerja",
+    "Program Kerja",
+    "Kegiatan",
+    "Jenis Pencairan",
+    "Anggaran"
+  ],
+  "labelsBiaya": ["Saldo Freeze", "Saldo S.D Lap Transaksi"],
+  "labelsJumlah": ["Jumlah"]
+}

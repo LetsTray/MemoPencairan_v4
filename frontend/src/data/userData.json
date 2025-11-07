@@ -1,0 +1,102 @@
+[
+  {
+    "Kode": "AB12CD34",
+    "Tipe": "Pegawai Internal",
+    "Nama": "Dedi Santoso",
+    "Jabatan": "HR Specialist",
+    "Grade": 7,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Surabaya",
+    "Bank": "Bank Negara Indonesia",
+    "NoRek": 9876543210987654
+  },
+  {
+    "Kode": "EF56GH78",
+    "Tipe": "Pegawai Eksternal",
+    "Nama": "Rina Wulandari",
+    "Jabatan": "Finance Officer",
+    "Grade": 6,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Bandung",
+    "Bank": "Bank Central Asia",
+    "NoRek": 1234567890123456
+  },
+  {
+    "Kode": "IJ90KL12",
+    "Tipe": "Pegawai Internal",
+    "Nama": "Agus Prabowo",
+    "Jabatan": "System Analyst",
+    "Grade": 8,
+    "Kantor": "BPJS Ketenagakerjaan Widya Chandra",
+    "Bank": "Bank Mandiri",
+    "NoRek": 9876509876509876
+  },
+  {
+    "Kode": "MN34OP56",
+    "Tipe": "Pegawai Eksternal",
+    "Nama": "Siti Marlina",
+    "Jabatan": "UI/UX Designer",
+    "Grade": 5,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Medan",
+    "Bank": "Bank Rakyat Indonesia",
+    "NoRek": 1122334455667788
+  },
+  {
+    "Kode": "QR78ST90",
+    "Tipe": "Pegawai Internal",
+    "Nama": "Bagus Nugroho",
+    "Jabatan": "Software Engineer",
+    "Grade": 9,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Jakarta Pusat",
+    "Bank": "Bank Mandiri",
+    "NoRek": 9988776655443322
+  },
+  {
+    "Kode": "UV12WX34",
+    "Tipe": "Pegawai Eksternal",
+    "Nama": "Tania Kusuma",
+    "Jabatan": "IT Support",
+    "Grade": 4,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Bogor",
+    "Bank": "Bank Danamon",
+    "NoRek": 8899001122334455
+  },
+  {
+    "Kode": "YZ56AB78",
+    "Tipe": "Pegawai Internal",
+    "Nama": "Andi Firmansyah",
+    "Jabatan": "Project Manager",
+    "Grade": 10,
+    "Kantor": "BPJS Ketenagakerjaan Widya Chandra",
+    "Bank": "Bank Permata",
+    "NoRek": 5566778899001122
+  },
+  {
+    "Kode": "CD90EF12",
+    "Tipe": "Pegawai Eksternal",
+    "Nama": "Putri Maharani",
+    "Jabatan": "Marketing Specialist",
+    "Grade": 6,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Semarang",
+    "Bank": "Bank CIMB Niaga",
+    "NoRek": 6677889900112233
+  },
+  {
+    "Kode": "GH34IJ56",
+    "Tipe": "Pegawai Internal",
+    "Nama": "Fajar Kurniawan",
+    "Jabatan": "Database Administrator",
+    "Grade": 8,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Surabaya",
+    "Bank": "Bank Central Asia",
+    "NoRek": 7766554433221100
+  },
+  {
+    "Kode": "KL78MN90",
+    "Tipe": "Pegawai Eksternal",
+    "Nama": "Nadya Ayu",
+    "Jabatan": "Graphic Designer",
+    "Grade": 5,
+    "Kantor": "BPJS Ketenagakerjaan Cabang Denpasar",
+    "Bank": "Bank Mandiri",
+    "NoRek": 9988007766554433
+  }
+]
