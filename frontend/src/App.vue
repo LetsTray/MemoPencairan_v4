@@ -13,6 +13,8 @@ import Dialog from "./components/Dialog.vue";
 import SearchBar from "./components/SearchBar.vue";
 import Card from "./components/Card.vue";
 import Table from "./components/Table.vue";
+import Chip from "./components/Chip.vue";
+import AddDebit from "./components/AddDebit.vue";
 
 {
   /*DATA & LABEL*/
@@ -42,6 +44,8 @@ export default {
     SearchBar,
     Card,
     Table,
+    Chip,
+    AddDebit,
   },
   data() {
     const headerKey = Object.keys(headerUserRB);
@@ -251,6 +255,30 @@ export default {
                                 class="flex justify-center flex-col items-center"
                               >
                                 <!--V-IF-->
+
+                                <div class="w-full flex flex-col gap-4">
+                                  <div class="flex items-center gap-3">
+                                    <h1 class="text-2xl font-semibold">
+                                      Bela Santika
+                                    </h1>
+                                    <Chip label="Pegawai Eksternal" />
+                                  </div>
+                                  <Table
+                                    headStyle="gray"
+                                    dataStyle="smbold"
+                                    :header="headerUserRB"
+                                    :data="dataUserRB"
+                                  />
+                                  <div>
+                                    <h1 class="text-lg font-medium uppercase">
+                                      Info Rekening
+                                    </h1>
+                                    <div>
+                                      <AddDebit />
+                                    </div>
+                                  </div>
+                                </div>
+
                                 <!--<div class="w-full flex flex-col gap-2">
                                   <!--NAMA & CHIP USER
 

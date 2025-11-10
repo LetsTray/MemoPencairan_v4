@@ -23,7 +23,7 @@ export default {
 };
 </script>
 <template>
-  <div
+  <button
     :class="[
       'flex',
       'items-center',
@@ -40,5 +40,5 @@ export default {
     ]"
   >
     {{ button }}
-  </div>
+  </button>
 </template>
