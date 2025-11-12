@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Data Pengguna",
+    "labels": ["Nama", "NIK", "Nomor Telepon"]
+  },
+  {
+    "title": "Data Rekening",
+    "labels": ["Bank", "Nomor Rekening"]
+  }
+]

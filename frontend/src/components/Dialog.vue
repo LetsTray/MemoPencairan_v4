@@ -31,11 +31,7 @@ export default {
           <h1 class="text-lg font-medium uppercase">{{ header }}</h1>
 
           <div class="flex">
-            <Button
-              button="Tutup"
-              variantClass="red"
-              @click="$emit('close', false)"
-            />
+            <Button button="Tutup" variantClass="red" @click="$emit('close')" />
           </div>
         </div>
         <div>

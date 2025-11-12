@@ -12,10 +12,19 @@ export default {
   components: {
     Chip,
   },
+  emits: ["select"],
+  methods: {
+    handleSelect() {
+      this.$emit("select", this.user);
+    },
+  },
 };
 </script>
 <template>
-  <div class="w-96 border border-[#DADADA] p-5 hover:shadow-md shadow-[#DADADA] cursor-pointer transition-shadow duration-300 bg-white">
+  <div
+    class="w-96 border border-[#DADADA] p-5 hover:shadow-md shadow-[#DADADA] cursor-pointer transition-shadow duration-300 bg-white"
+    @click="handleSelect"
+  >
     <div class="flex flex-col gap-2.5">
       <!--LOGO & HEADER-->
       <div class="flex flex-row justify-between gap-3">
