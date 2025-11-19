@@ -6,7 +6,7 @@ import Button from "../src/components/Button.vue";
 import NavBar from "../src/components/NavBar.vue";
 
 //DATA
-import tabs from "../src/data/tabs.json";
+import tabs from "../src/data/tabs/tabs.json";
 
 //VIEWS
 import DokumenPedukung from "./views/DokumenPedukung.vue";

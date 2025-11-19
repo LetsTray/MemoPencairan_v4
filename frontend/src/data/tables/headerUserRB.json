@@ -1,0 +1,6 @@
+[
+  { "key": "kode", "text": "Kode Pegawai" },
+  { "key": "jabatan", "text": "Jabatan" },
+  { "key": "grade", "text": "Grade" },
+  { "key": "kantor", "text": "Kantor BPJS Ketenagakerjaan" }
+]

@@ -3,9 +3,18 @@ export default {
   name: "TextArea",
   props: {
     label: String,
+    modelValue: {
+      type: String,
+      default: "",
+    },
     rows: {
       type: Number,
       default: 2,
+    },
+  },
+  methods: {
+    updateField(value) {
+      this.$emit("update:modelValue", value);
     },
   },
 };
@@ -15,7 +24,9 @@ export default {
     <label>{{ label }}</label>
     <textarea
       :rows="rows"
-      class="w-full  bg-[#FFF9DC] py-2 px-3 rounded-xs border border-[#DADADA] "
+      class="w-full bg-[#FFF9DC] py-2 px-3 rounded-xs border border-[#DADADA]"
+      :value="modelValue"
+      @input="updateField($event.target.value)"
     />
   </div>
 </template>

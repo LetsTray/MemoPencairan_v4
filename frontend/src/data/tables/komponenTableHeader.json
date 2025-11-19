@@ -1,0 +1,6 @@
+[
+  { "key": "kategoriBiaya", "text": "Kategori Biaya" },
+  { "key": "subkategoriBiaya", "text": "Subkategori Biaya" },
+  { "key": "nominal", "text": "Nominal" },
+  { "key": "tanggal", "text": "Tanggal" }
+]

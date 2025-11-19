@@ -1,0 +1,5 @@
+[
+  { "key": "memo", "label": "Rincian Memo" },
+  { "key": "biaya", "label": "Rincian Biaya" },
+  { "keu": "dokumen", "label": "Dokumen Pendukung" }
+]

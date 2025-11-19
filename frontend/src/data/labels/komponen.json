@@ -1,0 +1,33 @@
+[
+  {
+    "title": "Kategori Biaya",
+    "labels": [
+      {
+        "key": "kategoriBiaya",
+        "text": "Kategori Biaya"
+      },
+      {
+        "key": "subkategoriBiaya",
+        "text": "Subkategori Biaya"
+      }
+    ]
+  },
+  {
+    "title": "Jumlah Anggaran",
+    "labels": [
+      {
+        "key": "nominal",
+        "text": "Nominal"
+      }
+    ]
+  },
+  {
+    "title": "Periode Penggunaan",
+    "labels": [
+      {
+        "key": "tanggal",
+        "text": "Tanggal"
+      }
+    ]
+  }
+]

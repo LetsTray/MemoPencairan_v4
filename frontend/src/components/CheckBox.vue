@@ -9,7 +9,7 @@ export default {
     <label
       class="flex items-center gap-3 text-sm"
       v-for="label in labels"
-      :key="label.name"
+      :key="label.key"
     >
       <input type="checkbox" class="w-4 h-4 accent-[#EBF3F9]" />{{
         label.label

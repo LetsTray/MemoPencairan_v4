@@ -51,7 +51,7 @@ export default {
             :key="index"
             :class="['border-b', 'border-[#DADADA]', 'py-1', computedHeadStyle]"
           >
-            {{ header }}
+            {{ header.text }}
           </th>
         </tr>
       </thead>

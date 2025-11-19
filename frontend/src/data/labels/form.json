@@ -1,0 +1,44 @@
+{
+  "labelsMemo": [
+    {
+      "key": "unitKerja",
+      "text": "Unit Kerja"
+    },
+    {
+      "key": "sasaranUnitKerja",
+      "text": "Sasaran Unit Kerja"
+    },
+    {
+      "key": "programKerja",
+      "text": "Program Kerja"
+    },
+    {
+      "key": "kegiatan",
+      "text": "Kegiatan"
+    },
+    {
+      "key": "jenisPencairan",
+      "text": "Jenis Pencairan"
+    },
+    {
+      "key": "anggaran",
+      "text": "Anggaran"
+    }
+  ],
+  "labelsBiaya": [
+    {
+      "key": "saldoFreeze",
+      "text": "Saldo Freeze"
+    },
+    {
+      "key": "saldoLapTransaksi",
+      "text": "Saldo S.D Lap Transaksi"
+    }
+  ],
+  "labelsJumlah": [
+    {
+      "key": "jumlah",
+      "text": "Jumlah"
+    }
+  ]
+}

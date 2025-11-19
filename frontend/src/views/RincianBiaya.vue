@@ -1,4 +1,7 @@
 <script>
+//LIBRARY
+import axios from "axios";
+
 //KOMPONEN
 import ContentContainer from "../components/ContentContainer.vue";
 import TextField from "../components/TextField.vue";
@@ -10,13 +13,14 @@ import Button from "../components/Button.vue";
 import Table from "../components/Table.vue";
 import Chip from "../components/Chip.vue";
 import Card from "../components/Card.vue";
+import Alert from "../components/Alert.vue";
 
 //DATA
-import formLabels from "../data/formLabels.json";
-import komponenLabels from "../data/komponenLabels.json";
-import headerUserRB from "../data/headerUserRB.json";
-import userData from "../data/userData.json";
-import rekeningLabels from "../data/rekeningLabels.json";
+import form from "../data/labels/form.json";
+import komponen from "../data/labels/komponen.json";
+import headerUserRB from "../data/tables/headerUserRB.json";
+import rekening from "../data/labels/rekening.json";
+import komponenTableHeader from "../data/tables/komponenTableHeader.json";
 
 export default {
   name: "RincianBiaya",
@@ -28,25 +32,67 @@ export default {
     Button,
     AddDebit,
     Dialog,
+    Alert,
     Table,
     Chip,
     Card,
   },
   data() {
     return {
-      komponenLabels,
-      rekeningLabels,
+      komponen,
+      rekening,
       headerUserRB,
-      formLabels,
-      userData,
+      form,
+      userData: [],
       searchQuery: "",
+      komponenTableHeader,
+
+      //Pop Up Dialog
       isUserDialogOpen: false,
       isRekeningDialogOpen: false,
       isKomponenDialogOpen: false,
+
       selectedUser: null,
+      //Table data komponen biaya
+      komponenTableData: [],
+
+      biayaForm: {
+        anggaran: {
+          saldoFreeze: "",
+          saldoLapTransaksi: "",
+        },
+        jumlahPencairan: {
+          jumlah: "",
+          keperluan: "",
+        },
+        rincianUser: null,
+        komponenBiaya: [],
+      },
+      alert: {
+        show: false,
+        message: "",
+        variant: "green",
+      },
+
+      komponenBiayaBaru: {
+        kategoriBiaya: "",
+        subkategoriBiaya: "",
+        nominal: "",
+        tanggal: "",
+      },
     };
   },
   methods: {
+    async fetchUserData() {
+      try {
+        const res = await axios.get(
+          "http://localhost:8000/api/Entry_MemoPencairanAnggaran/rekanan"
+        );
+        this.userData = res.data;
+      } catch (error) {
+        console.error("Error fetching data : ", error);
+      }
+    },
     handleUserDialogClose() {
       this.isUserDialogOpen = false;
       this.searchQuery = "";
@@ -61,7 +107,63 @@ export default {
       this.selectedUser = user;
       this.isUserDialogOpen = false;
       this.searchQuery = "";
+
+      this.biayaForm.rincianUser = {
+        Nama: user.Nama,
+        Kode: user.Kode,
+        Jabatan: user.Jabatan,
+        Grade: user.Grade,
+        NoRek: user.NoRek,
+      };
     },
+
+    simpanKomponenBiayaBaru() {
+      this.komponenTableData.push({ ...this.komponenBiayaBaru });
+
+      this.komponenBiayaBaru = {
+        kategoriBiaya: "",
+        subkategoriBiaya: "",
+        nominal: "",
+        tanggal: "",
+      };
+
+      this.isKomponenDialogOpen = false;
+    },
+    simpanBiaya() {
+      this.biayaForm.komponenBiaya = [...this.komponenTableData];
+      localStorage.setItem("biayaForm", JSON.stringify(this.biayaForm));
+
+      this.alert = {
+        show: true,
+        message: "Data berhasil disimpan!",
+        variant: "green",
+      };
+
+      setTimeout(() => {
+        this.alert.show = false;
+      }, 3000);
+
+    
+    },
+  },
+  mounted() {
+    const tersimpanBiaya = localStorage.getItem("biayaForm");
+    if (tersimpanBiaya) {
+      this.biayaForm = JSON.parse(tersimpanBiaya);
+    }
+
+    const tersimpanKomponen = localStorage.getItem("komponenTableData");
+    if (tersimpanKomponen) {
+      this.komponenTableData = JSON.parse(tersimpanKomponen);
+    }
+
+    const tersimpanUser = localStorage.getItem("selectedUser");
+    if (tersimpanUser) {
+      this.selectedUser = JSON.parse(tersimpanUser);
+    }
+
+    //Fetch data rekanan/pegawai
+    this.fetchUserData();
   },
   computed: {
     searchUser() {
@@ -78,9 +180,32 @@ export default {
       );
     },
   },
+  watch: {
+    komponenTableData: {
+      handler(value) {
+        localStorage.setItem("komponenTableData", JSON.stringify(value));
+      },
+      deep: true,
+    },
+    selectedUser: {
+      handler(value) {
+        localStorage.setItem("selectedUser", JSON.stringify(value));
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 <template>
+  <div class="relative">
+    <div class="absolute top-4 right-6 z-50">
+      <Alert
+        :show="alert.show"
+        :message="alert.message"
+        :variantClass="alert.variant"
+      />
+    </div>
+  </div>
   <ContentContainer
     variantClass="gray"
     sizeClass="full"
@@ -101,7 +226,11 @@ export default {
             <template #body>
               <div class="flex flex-col justify-between gap-4">
                 <hr class="border-t border-[#DADADA]" />
-                <TextField :labels="formLabels.labelsBiaya" />
+                <TextField
+                  :labels="form.labelsBiaya"
+                  :modelValue="biayaForm.anggaran"
+                  @update:modelValue="biayaForm.anggaran = $event"
+                />
               </div>
             </template>
           </ContentContainer>
@@ -114,8 +243,19 @@ export default {
             ><template #body>
               <div class="flex flex-col justify-between gap-4">
                 <hr class="border-t border-[#DADADA]" />
-                <TextField :labels="formLabels.labelsJumlah" />
-                <TextArea label="Keperluan" :rows="5" />
+                <TextField
+                  :labels="form.labelsJumlah"
+                  :modelValue="biayaForm.jumlahPencairan"
+                  @update:modelValue="biayaForm.jumlahPencairan = $event"
+                />
+                <TextArea
+                  label="Keperluan"
+                  :rows="5"
+                  :modelValue="biayaForm.jumlahPencairan.keperluan"
+                  @update:modelValue="
+                    biayaForm.jumlahPencairan.keperluan = $event
+                  "
+                />
               </div>
             </template>
           </ContentContainer>
@@ -126,7 +266,6 @@ export default {
           sizeClass="full"
           headerClass="black"
           header="Rincian Biaya"
-          subHeader="Mohon ceklis semua dokumen terlampir agar dapat dipastikan semua sudah benar"
         >
           <template #action>
             <Button
@@ -138,7 +277,7 @@ export default {
           <template #body>
             <div class="flex flex-col gap-4">
               <ContentContainer
-                variantClass="none"
+                variantClass="gray"
                 sizeClass="full"
                 headerClass="black"
               >
@@ -212,7 +351,7 @@ export default {
                             <template #body>
                               <div class="flex flex-col gap-4">
                                 <div
-                                  v-for="(section, index) in rekeningLabels"
+                                  v-for="(section, index) in rekening"
                                   :key="index"
                                   class="flex flex-col gap-1"
                                 >
@@ -266,7 +405,7 @@ export default {
                     <template #body>
                       <div class="flex flex-col gap-4">
                         <div
-                          v-for="(section, index) in komponenLabels"
+                          v-for="(section, index) in komponen"
                           :key="index"
                           class="flex flex-col gap-1"
                         >
@@ -274,19 +413,37 @@ export default {
                             <i>{{ section.title }}</i>
                           </h1>
                           <div class="flex flex-col gap-2">
-                            <TextField :labels="section.labels" />
+                            <TextField
+                              :labels="section.labels"
+                              :modelValue="komponenBiayaBaru"
+                              @update:modelValue="komponenBiayaBaru = $event"
+                            />
                           </div>
                         </div>
                         <div class="flex justify-end">
-                          <Button button="Simpan" variantClass="blue" />
+                          <Button
+                            button="Simpan"
+                            variantClass="blue"
+                            @click="simpanKomponenBiayaBaru"
+                          />
                         </div>
                       </div>
                     </template>
                   </Dialog>
                   <div class="flex justify-center flex-col items-center">
-                    <div></div>
+                    <div class="w-full">
+                      <Table
+                        headStyle="black"
+                        dataStyle="normal"
+                        :header="komponenTableHeader"
+                        :data="komponenTableData"
+                      />
+                    </div>
 
-                    <div class="text-[#DADADA] text-sm">
+                    <div
+                      v-if="komponenTableData.length === 0"
+                      class="text-[#DADADA] text-sm mt-5"
+                    >
                       <i>Belum ada komponen biaya yang ditambahkan</i>
                     </div>
                   </div>
@@ -297,7 +454,7 @@ export default {
         </ContentContainer>
         <div class="flex gap-2 justify-end">
           <Button button="Edit" variantClass="lightBlue" />
-          <Button button="Simpan" variantClass="blue" />
+          <Button button="Simpan" variantClass="blue" @click="simpanBiaya" />
         </div>
       </div>
     </template>

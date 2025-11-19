@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Data Pengguna",
+    "labels": [
+      { "key": "nama", "text": "Nama" },
+      {
+        "key": "nik",
+        "text": "NIK"
+      },
+      {
+        "key": "nomorTelepon",
+        "text": "Nomor Telepon"
+      }
+    ]
+  },
+  {
+    "title": "Data Rekening",
+    "labels": [
+      { "key": "bank", "text": "Bank" },
+      {
+        "key": "nomorRekening",
+        "text": "Nomor Rekening"
+      }
+    ]
+  }
+]
