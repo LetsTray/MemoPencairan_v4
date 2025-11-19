@@ -7,6 +7,10 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     updateField(key, value) {
@@ -29,6 +33,8 @@ export default {
         class="w-full lg:w-1/2 bg-[#FFF9DC] py-2 px-3 rounded-xs border border-[#DADADA]"
         :value="modelValue[label.key]"
         @input="updateField(label.key, $event.target.value)"
+        :readonly="readOnly"
+        :disabled="readOnly"
       />
     </form>
   </div>

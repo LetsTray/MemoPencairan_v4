@@ -55,14 +55,19 @@ export default {
           </th>
         </tr>
       </thead>
+      
       <tbody>
         <tr v-for="(row, rowIndex) in data" :key="rowIndex">
           <td
             v-for="(data, index) in row"
             :key="index"
-            :class="[computedDataStyle]"
+            :class="['py-3', computedDataStyle]"
           >
             {{ data }}
+          </td>
+
+          <td v-if="$slots.actions">
+            <slot name="actions" :row="row" :index="rowIndex"></slot>
           </td>
         </tr>
       </tbody>

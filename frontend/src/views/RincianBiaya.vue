@@ -21,6 +21,7 @@ import komponen from "../data/labels/komponen.json";
 import headerUserRB from "../data/tables/headerUserRB.json";
 import rekening from "../data/labels/rekening.json";
 import komponenTableHeader from "../data/tables/komponenTableHeader.json";
+import { isReadonly } from "vue";
 
 export default {
   name: "RincianBiaya",
@@ -46,6 +47,8 @@ export default {
       userData: [],
       searchQuery: "",
       komponenTableHeader,
+
+      isReadOnly: false,
 
       //Pop Up Dialog
       isUserDialogOpen: false,
@@ -143,7 +146,7 @@ export default {
         this.alert.show = false;
       }, 3000);
 
-    
+      this.isReadOnly = true;
     },
   },
   mounted() {
@@ -230,6 +233,7 @@ export default {
                   :labels="form.labelsBiaya"
                   :modelValue="biayaForm.anggaran"
                   @update:modelValue="biayaForm.anggaran = $event"
+                  :readOnly="isReadOnly"
                 />
               </div>
             </template>
@@ -247,6 +251,7 @@ export default {
                   :labels="form.labelsJumlah"
                   :modelValue="biayaForm.jumlahPencairan"
                   @update:modelValue="biayaForm.jumlahPencairan = $event"
+                  :readOnly="isReadOnly"
                 />
                 <TextArea
                   label="Keperluan"
@@ -255,6 +260,7 @@ export default {
                   @update:modelValue="
                     biayaForm.jumlahPencairan.keperluan = $event
                   "
+                  :readOnly="isReadOnly"
                 />
               </div>
             </template>

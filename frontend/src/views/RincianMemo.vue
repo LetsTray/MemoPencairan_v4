@@ -32,12 +32,18 @@ export default {
         message: "",
         variant: "green",
       },
+      isReadOnly: false,
     };
   },
   mounted() {
     const tersimpan = localStorage.getItem("memoForm");
     if (tersimpan) {
       this.memoForm = JSON.parse(tersimpan);
+    }
+
+    const read = localStorage.getItem("isReadOnlyMemo");
+    if (read !== null) {
+      this.isReadOnly = read === "true";
     }
   },
   methods: {
@@ -54,7 +60,12 @@ export default {
         this.alert.show = false;
       }, 3000);
 
-      
+      this.isReadOnly = true;
+      localStorage.setItem("isReadOnlyMemo", "true");
+    },
+    editMemo() {
+      this.isReadOnly = false;
+      localStorage.setItem("isReadOnlyMemo", "false");
     },
   },
 };
@@ -83,9 +94,10 @@ export default {
           :labels="form.labelsMemo"
           :modelValue="memoForm"
           @update:modelValue="memoForm = $event"
+          :readOnly="isReadOnly"
         />
         <div class="flex gap-2 justify-end">
-          <Button button="Edit" variantClass="lightBlue" />
+          <Button button="Edit" variantClass="lightBlue" @click="editMemo" />
           <Button button="Simpan" variantClass="blue" @click="simpanMemo" />
         </div>
       </div>

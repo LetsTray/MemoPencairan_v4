@@ -57,15 +57,6 @@ export default {
         localStorage.setItem("dokumenPendukung", base64);
       };
       reader.readAsDataURL(file);
-      /* if (file && file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImg = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        this.previewImg = null;
-      }*/
     },
     simpanDokumen() {
       localStorage.setItem("dokumenForm", JSON.stringify(this.dokumenForm));
@@ -112,7 +103,6 @@ export default {
           />
         </div>
         <div class="flex gap-2 justify-end">
-          <Button button="Edit" variantClass="lightBlue" />
           <Button button="Simpan" variantClass="blue" @click="simpanDokumen" />
         </div>
       </div>

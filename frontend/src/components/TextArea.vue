@@ -11,6 +11,10 @@ export default {
       type: Number,
       default: 2,
     },
+    readOnly: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     updateField(value) {
@@ -27,6 +31,8 @@ export default {
       class="w-full bg-[#FFF9DC] py-2 px-3 rounded-xs border border-[#DADADA]"
       :value="modelValue"
       @input="updateField($event.target.value)"
+      :readonly="readOnly"
+      :disabled="readOnly"
     />
   </div>
 </template>

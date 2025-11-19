@@ -101,6 +101,8 @@ export default {
             v-else
             class="flex justify-center items-center min-h-[600px] w-full"
           >
+
+          
             <p class="text-[#DADADA] text-center text-sm">
               <i>Belum ada data memo pencairan anggaran</i>
             </p>
