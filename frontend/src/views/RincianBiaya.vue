@@ -147,6 +147,11 @@ export default {
       }, 3000);
 
       this.isReadOnly = true;
+      localStorage.setItem("isReadOnlyBiaya", "true");
+    },
+    editBiaya() {
+      this.isReadOnly = false;
+      localStorage.setItem("isReadOnlyBiaya", "false");
     },
   },
   mounted() {
@@ -164,6 +169,11 @@ export default {
     if (tersimpanUser) {
       this.selectedUser = JSON.parse(tersimpanUser);
     }
+
+    const read = localStorage.getItem("isReadOnlyBiaya");
+    if (read !== null) {
+      this.isReadOnly = read === "true";
+    } 
 
     //Fetch data rekanan/pegawai
     this.fetchUserData();
@@ -423,6 +433,7 @@ export default {
                               :labels="section.labels"
                               :modelValue="komponenBiayaBaru"
                               @update:modelValue="komponenBiayaBaru = $event"
+                              :readOnly="isReadOnly"
                             />
                           </div>
                         </div>
@@ -459,7 +470,7 @@ export default {
           </template>
         </ContentContainer>
         <div class="flex gap-2 justify-end">
-          <Button button="Edit" variantClass="lightBlue" />
+          <Button button="Edit" variantClass="lightBlue" @click="editBiaya" />
           <Button button="Simpan" variantClass="blue" @click="simpanBiaya" />
         </div>
       </div>
