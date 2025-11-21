@@ -22,12 +22,14 @@ export default {
     };
   },
   mounted() {
-    const saved = localStorage.getItem("dokumenForm");
-    if (saved) {
-      this.dokumenForm = JSON.parse(saved);
+    //Agar upload terakhir tetap muncul saat halaman direfresh
+    const saved = localStorage.getItem("dokumenForm"); //Mengecek apakah ada data dokumen yang tersimpan di localStorage
 
+    if (saved) {
+      this.dokumenForm = JSON.parse(saved); //Jika ada -> load ulang ke dalam dokumenForm
       if (this.dokumenForm.file) {
         if (this.dokumenForm.type === "pdf") {
+          //Jika file = pdf -> convert string base64 ke Blob url melalui createPdfBlob()
           this.createPdfBlob(this.dokumenForm.file);
         } else {
           this.previewImg = this.dokumenForm.file;
@@ -37,49 +39,55 @@ export default {
   },
   computed: {
     isPdf() {
-      return this.dokumenForm.type === "pdf";
+      return this.dokumenForm.type === "pdf"; //Mengembalikan nilai true jika file adalah pdf untuk menentukan penggunaan preview
     },
   },
   methods: {
     simpanDokumen() {
-      localStorage.setItem("dokumenForm", JSON.stringify(this.dokumenForm));
+      //Menyimpan dokumen dan memberi feedback ke user
+      localStorage.setItem("dokumenForm", JSON.stringify(this.dokumenForm)); //Menyimpan dokumenForm ke localStorage
 
       this.alert = {
+        //Memunculkan alert success
         show: true,
         message: "Data berhasil disimpan!",
         variant: "green",
       };
 
       setTimeout(() => {
-        this.alert.show = false;
+        this.alert.show = false; //Menutup alert setelah 3 detik
       }, 3000);
     },
     bukaFile() {
+      //Memungkinkan user membuka dokumen di tab baru
       if (!this.dokumenForm.file) return;
 
       if (this.dokumenForm.type === "pdf") {
+        //Jika file pdf -> dibuka menggunakan pdfUrl (Blob url)
         window.open(this.pdfUrl, "_blank");
       } else {
-        window.open(this.dokumenForm.file, "_blank");
+        window.open(this.dokumenForm.file, "_blank"); //Jika gambar -> dibuka menggunakan base64 string
       }
     },
     onFileChange(event) {
-      const file = event.target.files[0];
+      //Intinya : proses upload + preview + save otomatis
+      const file = event.target.files[0]; //Mengambil file dari input
       if (!file) return;
 
-      const reader = new FileReader();
+      const reader = new FileReader(); //Membaca menggunakan FileReader menjadi base64
 
       reader.onload = () => {
         const base64 = reader.result;
 
-        this.dokumenForm.file = base64;
+        this.dokumenForm.file = base64; //Menyimpan base64 ke dokumenForm.file
 
         if (file.type === "application/pdf") {
+          //Jika pdf -> buat blob
           this.dokumenForm.type = "pdf";
           this.createPdfBlob(base64);
           this.previewImg = null;
         } else {
-          this.dokumenForm.type = "img";
+          this.dokumenForm.type = "img"; //Jika gambar -> langsung tampil di preview
           this.previewImg = base64;
           this.pdfUrl = null;
         }
@@ -90,8 +98,9 @@ export default {
     },
 
     createPdfBlob(base64) {
-      const splitData = base64.split(",")[1];
-      const byteCharacters = atob(splitData);
+      //Penting untuk preview pdf karena <embed> tidak bisa baca base64 langsung
+      const splitData = base64.split(",")[1]; //Memisahkan metadata base64
+      const byteCharacters = atob(splitData); //Decode menjadi byte array
       const byteNumbers = new Array(byteCharacters.length);
 
       for (let i = 0; i < byteCharacters.length; i++) {
@@ -99,6 +108,7 @@ export default {
       }
 
       const blob = new Blob([new Uint8Array(byteNumbers)], {
+        //Membuat blob url
         type: "application/pdf",
       });
       this.pdfUrl = URL.createObjectURL(blob);
