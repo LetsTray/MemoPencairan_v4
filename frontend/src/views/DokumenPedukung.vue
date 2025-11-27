@@ -2,12 +2,14 @@
 import ContentContainer from "../components/ContentContainer.vue";
 import Button from "../components/Button.vue";
 import Alert from "../components/Alert.vue";
+import Dialog from "../components/Dialog.vue";
 
 export default {
   name: "DokumenPendukung",
-  components: { ContentContainer, Button, Alert },
+  components: { ContentContainer, Button, Alert, Dialog },
   data() {
     return {
+      isKonfirmDialogOpen: false,
       alert: {
         show: false,
         message: "",
@@ -113,6 +115,9 @@ export default {
       });
       this.pdfUrl = URL.createObjectURL(blob);
     },
+    handleKonfirmDialogClose() {
+      this.isKonfirmDialogOpen = false;
+    },
   },
 };
 </script>
@@ -169,8 +174,22 @@ export default {
         </div>
 
         <div class="flex justify-end">
-          <Button button="Simpan" variantClass="blue" @click="simpanDokumen" />
+          <Button
+            button="Simpan"
+            variantClass="blue"
+            @click="
+              simpanDokumen();
+              isKonfirmDialogOpen = true;
+            "
+          />
         </div>
+
+        <Dialog
+          header="Konfirmasi Simpan Entry Pencairan Anggaran"
+          :isDialogOpen="isKonfirmDialogOpen"
+          @close="handleKonfirmDialogClose"
+        >
+        </Dialog>
       </div>
     </template>
   </ContentContainer>

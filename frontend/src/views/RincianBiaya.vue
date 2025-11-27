@@ -56,6 +56,8 @@ export default {
       isKomponenDialogOpen: false,
 
       selectedUser: null,
+      editingIndex: null,
+      isEditMode: false,
       //Table data komponen biaya
       komponenTableData: [],
 
@@ -101,7 +103,7 @@ export default {
       this.searchQuery = "";
     },
     handleKomponenDialogClose() {
-      this.isKomponenDialogOpen = false;
+      this.resetKomponenForm();
     },
     handleRekeningDialogOpen() {
       this.isRekeningDialogOpen = true;
@@ -153,6 +155,52 @@ export default {
       this.isReadOnly = false;
       localStorage.setItem("isReadOnlyBiaya", "false");
     },
+    deleteKomponenBiaya(index) {
+      if (confirm("Apakah anda yakin ingin menghapus komponen biaya ini?")) {
+        this.komponenTableData.splice(index, 1);
+        this.alert = {
+          show: true,
+          message: "Komponen biaya berhasil dihapus!",
+          variant: "red",
+        };
+        setTimeout(() => {
+          this.alert.show = false;
+        }, 3000);
+      }
+    },
+    editKomponenBiaya(index) {
+      this.editingIndex = index;
+      this.komponenBiayaBaru = { ...this.komponenTableData[index] };
+      this.isKomponenDialogOpen = true;
+      this.isEditMode = true;
+    },
+    simpanKomponenBiayaEdit() {
+      if (this.editingIndex !== null) {
+        this.komponenTableData[this.editingIndex] = {
+          ...this.komponenBiayaBaru,
+        };
+        this.alert = {
+          show: true,
+          message: "Komponen biaya berhasil diedit!",
+          variant: "green",
+        };
+        setTimeout(() => {
+          this.alert.show = false;
+        }, 3000);
+      }
+      this.resetKomponenForm();
+    },
+    resetKomponenForm() {
+      this.komponenBiayaBaru = {
+        kategoriBiaya: "",
+        subkategoriBiaya: "",
+        nominal: "",
+        tanggal: "",
+      };
+      this.editingIndex = null;
+      this.isEditMode = false;
+      this.isKomponenDialogOpen = false;
+    },
   },
   mounted() {
     const tersimpanBiaya = localStorage.getItem("biayaForm");
@@ -173,7 +221,7 @@ export default {
     const read = localStorage.getItem("isReadOnlyBiaya");
     if (read !== null) {
       this.isReadOnly = read === "true";
-    } 
+    }
 
     //Fetch data rekanan/pegawai
     this.fetchUserData();
@@ -439,9 +487,13 @@ export default {
                         </div>
                         <div class="flex justify-end">
                           <Button
-                            button="Simpan"
+                            :button="isEditMode ? 'Simpan' : 'Simpan'"
                             variantClass="blue"
-                            @click="simpanKomponenBiayaBaru"
+                            @click="
+                              isEditMode
+                                ? simpanKomponenBiayaEdit()
+                                : simpanKomponenBiayaBaru()
+                            "
                           />
                         </div>
                       </div>
@@ -454,7 +506,24 @@ export default {
                         dataStyle="normal"
                         :header="komponenTableHeader"
                         :data="komponenTableData"
-                      />
+                      >
+                        <template #actions="{ item, index }">
+                          <div
+                            class="flex flex-col md:flex-row gap-2 justify-center"
+                          >
+                            <Button
+                              button="Edit"
+                              variantClass="lightBlue"
+                              @click="editKomponenBiaya(index)"
+                            />
+                            <Button
+                              button="Delete"
+                              variantClass="red"
+                              @click="deleteKomponenBiaya(index)"
+                            />
+                          </div>
+                        </template>
+                      </Table>
                     </div>
 
                     <div
