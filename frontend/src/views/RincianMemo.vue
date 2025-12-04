@@ -48,6 +48,13 @@ export default {
   },
   methods: {
     simpanMemo() {
+      const isMemoValid = this.$refs.textFieldMemo.validate();
+
+      if (!isMemoValid) {
+        //Jika tidak valid, jangan simpan
+        return;
+      }
+
       localStorage.setItem("memoForm", JSON.stringify(this.memoForm));
 
       this.alert = {
@@ -91,10 +98,19 @@ export default {
       <div class="flex flex-col justify-between gap-4">
         <hr class="border-t border-[#DADADA]" />
         <TextField
+          ref="textFieldMemo"
           :labels="form.labelsMemo"
           :modelValue="memoForm"
           @update:modelValue="memoForm = $event"
           :readOnly="isReadOnly"
+          :requiredKeys="[
+            'unitKerja',
+            'sasaranUnitKerja',
+            'programKerja',
+            'kegiatan',
+            'jenisPencairan',
+            'anggaran',
+          ]"
         />
         <div class="flex gap-2 justify-end">
           <Button button="Edit" variantClass="lightBlue" @click="editMemo" />

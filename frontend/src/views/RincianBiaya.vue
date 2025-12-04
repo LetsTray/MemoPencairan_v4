@@ -21,7 +21,7 @@ import komponen from "../data/labels/komponen.json";
 import headerUserRB from "../data/tables/headerUserRB.json";
 import rekening from "../data/labels/rekening.json";
 import komponenTableHeader from "../data/tables/komponenTableHeader.json";
-import { isReadonly } from "vue";
+import { isReadonly, toHandlers } from "vue";
 
 export default {
   name: "RincianBiaya",
@@ -135,6 +135,34 @@ export default {
       this.isKomponenDialogOpen = false;
     },
     simpanBiaya() {
+      const isAnggaranValid = this.$refs.textFieldAnggaran;
+      const isJumlahValid = this.$refs.textFieldJumlah;
+
+      const isKeperluanValid =
+        this.biayaForm.jumlahPencairan.keperluan &&
+        this.biayaForm.jumlahPencairan.keperluan.trim() !== "";
+
+      const isUserSelected = this.selectedUser !== null;
+      const isKomponenValid = this.komponenTableData.length > 0;
+
+      if (
+        !isAnggaranValid ||
+        !isJumlahValid ||
+        !isKeperluanValid ||
+        !isUserSelected ||
+        !isKomponenValid
+      ) {
+        this.alert = {
+          show: true,
+          message: "Semua field harus diisi. Silakan lengkapi semua field.",
+          variant: "red",
+        };
+        setTimeout(() => {
+          this.alert.show = false;
+        }, 3000);
+        return;
+      }
+
       this.biayaForm.komponenBiaya = [...this.komponenTableData];
       localStorage.setItem("biayaForm", JSON.stringify(this.biayaForm));
 
@@ -288,10 +316,12 @@ export default {
               <div class="flex flex-col justify-between gap-4">
                 <hr class="border-t border-[#DADADA]" />
                 <TextField
+                  ref="textFieldAnggaran"
                   :labels="form.labelsBiaya"
                   :modelValue="biayaForm.anggaran"
                   @update:modelValue="biayaForm.anggaran = $event"
                   :readOnly="isReadOnly"
+                  :requiredKeys="['saldoFreeze', 'saldoLapTransaksi']"
                 />
               </div>
             </template>
@@ -306,10 +336,12 @@ export default {
               <div class="flex flex-col justify-between gap-4">
                 <hr class="border-t border-[#DADADA]" />
                 <TextField
+                  ref="textFieldJumlah"
                   :labels="form.labelsJumlah"
                   :modelValue="biayaForm.jumlahPencairan"
                   @update:modelValue="biayaForm.jumlahPencairan = $event"
                   :readOnly="isReadOnly"
+                  :requiredKeys="['jumlah']"
                 />
                 <TextArea
                   label="Keperluan"

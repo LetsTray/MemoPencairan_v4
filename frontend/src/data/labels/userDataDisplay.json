@@ -1,0 +1,7 @@
+[
+  { "key": "nama", "text": "Nama" },
+  { "key": "kode", "text": "Kode Pegawai" },
+  { "key": "jabatan", "text": "Jabatan" },
+  { "key": "grade", "text": "Grade" },
+  { "key": "norek", "text": "Nomor Rekening" }
+]

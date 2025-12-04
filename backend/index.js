@@ -3,12 +3,15 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
+
+//Route
 import route from "./routes/rekananRoute.js";
+import memoRoute from "./routes/memoRoute.js";
 
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "25mb" }));
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -27,3 +30,4 @@ mongoose
   });
 
 app.use("/api/Entry_MemoPencairanAnggaran", route);
+app.use("/api/Entry_MemoPencairanAnggaran", memoRoute)

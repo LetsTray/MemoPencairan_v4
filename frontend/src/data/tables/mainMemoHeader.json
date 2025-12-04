@@ -1,0 +1,7 @@
+[
+  { "key": "tanggal", "text": "Tanggal" },
+  { "key": "unitKerja", "text": "Unit Kerja" },
+  { "key": "programKerja", "text": "Program Kerja" },
+  { "key": "jumlahPencairan", "text": "Jumlah Pencairan" },
+  { "key": "aksi", "text": "Aksi" }
+]
